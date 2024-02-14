@@ -7,6 +7,7 @@ interface TodoStore {
     [TodoStatus.Completed]: Todo[];
 }
 
+const MaxTodo = 1
 
 const defaultValue = {
     [TodoStatus.Pending]: [
@@ -34,7 +35,12 @@ export default () => {
     }
 
     const addNewTodo = (todo: Todo) => {
-        todoStore[todo.status].push(todo)
+       const todos = todoStore[todo.status];
+       if(todos.length <= MaxTodo ){
+        todos.push(todo);
+       }else {
+        alert("Maximum number of todo-list reached")
+       }
     }
 
     const deleteTodo = (todoDelete: Todo) => {

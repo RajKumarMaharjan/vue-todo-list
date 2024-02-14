@@ -1,37 +1,3 @@
-<script setup lang="ts">
-import { reactive, ref } from 'vue'
-import useTodo from '../store/useTodo'
-import { type Todo, TodoStatus } from '../types'
-
-interface Props {
-  status: TodoStatus
-}
-const props = defineProps<Props>()
-
-const shouldDisplayForm = ref(false)
-
-const { addNewTodo } = useTodo()
-
-const newTodo = reactive<Omit<Todo, 'id'>>({
-  title: '',
-  description: '',
-  status: props.status
-})
-
-const resetForm = () => {
-  shouldDisplayForm.value = false
-  newTodo.title = ''
-  newTodo.description = ''
-}
-
-const handleOnSubmit = () => {
-  addNewTodo({
-    id: Math.random(),
-    ...newTodo
-  })
-  resetForm()
-}
-</script>
 
 <template>
   <div>
@@ -63,3 +29,45 @@ const handleOnSubmit = () => {
     </template>
   </div>
 </template>
+
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
+import useTodo from '../store/useTodo'
+import { type Todo, TodoStatus } from '../types'
+
+interface Props {
+  status: TodoStatus
+}
+const props = defineProps<Props>()
+
+const shouldDisplayForm = ref(false)
+const showRequiredMessage = ref(false)
+
+const { addNewTodo } = useTodo()
+
+const newTodo = reactive<Omit<Todo, 'id'>>({
+  title: '',
+  description: '',
+  status: props.status
+})
+
+const resetForm = () => {
+  shouldDisplayForm.value = false
+  newTodo.title = ''
+  newTodo.description = ''
+  showRequiredMessage.value = false
+}
+
+const handleOnSubmit = () => {
+  if (newTodo.title.trim() === '' || newTodo.description.trim() === '') {
+    showRequiredMessage.value = true
+    return
+  }
+
+  addNewTodo({
+    id: Math.random(),
+    ...newTodo
+  })
+  resetForm()
+}
+</script>

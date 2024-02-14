@@ -1,7 +1,7 @@
 export enum TodoStatus {
-    Pending = "pending",
-    InProgress = "inProgress",
-    Completed = "completed"
+  Pending="pending",
+  InProgress="inProgress",
+  Completed="completed",
 }
 
 export interface Todo {
@@ -9,4 +9,8 @@ export interface Todo {
     title: string;
     description: string;
     status: TodoStatus;
+}
+
+export function getTodoStatusLength(): number {
+  return Object.keys(TodoStatus).length / 2;
 }
