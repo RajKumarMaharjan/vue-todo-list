@@ -11,7 +11,8 @@
     <template v-else>
       <form @submit.prevent="handleOnSubmit">
         <div>
-          <input type="text" placeholder="Title" v-model="newTodo.title" class="px-2 w-full" />
+          <input type="text" placeholder="Title" v-model="newTodo.title" class="px-2 my-1 w-full" />
+          <span v-if="showRequiredMessage && newTodo.description.trim() === ''" class="text-red-400">This field is required</span>
         </div>
         <div class="py-2">
           <textarea
@@ -20,6 +21,7 @@
             v-model="newTodo.description"
             class="p-2 w-full"
           />
+          <span v-if="showRequiredMessage && newTodo.description.trim() === ''" class="text-red-400">This field is required</span>
         </div>
         <div class="flex justify-between">
           <button type="submit" class="border px-4 text-white">Submit</button>
